@@ -1,0 +1,6 @@
+
+.github/instructions/
+.venv/
+node_modules/
+deploy/
+docs/

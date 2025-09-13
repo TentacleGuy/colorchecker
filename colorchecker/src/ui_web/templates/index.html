@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColorChecker</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/app.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>ColorChecker</h1>
+    </header>
+    <main>
+        <section id="live-preview">
+            <h2>Live Vorschau</h2>
+            <img id="video-stream" src="/stream" alt="Live Kamera Stream">
+            <button id="capture-button">Capture</button>
+        </section>
+        <section id="settings">
+            <h2>Einstellungen</h2>
+            <form id="settings-form">
+                <label for="roi">ROI (Koordinaten):</label>
+                <input type="text" id="roi" name="roi" required>
+                
+                <label for="sample-count">Sample Count:</label>
+                <input type="number" id="sample-count" name="sample-count" min="1" value="5" required>
+                
+                <button type="button" id="calibrate-button">Kalibrierung starten</button>
+                <label>
+                    <input type="checkbox" id="led-toggle" name="led-toggle"> LED-Anzeigen an/aus
+                </label>
+            </form>
+        </section>
+        <section id="results">
+            <h2>Ergebnisse</h2>
+            <ul id="result-list">
+                <!-- Ergebnisse werden hier dynamisch hinzugefügt -->
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 ColorChecker Projekt</p>
+    </footer>
+</body>
+</html>

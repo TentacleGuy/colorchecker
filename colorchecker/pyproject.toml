@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "colorchecker"
+version = "0.1.0"
+description = "A project for reliable color detection and matching using a camera and OLED display."
+authors = ["Your Name <youremail@example.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.68"
+opencv-python = "^4.5"
+numpy = "^1.21"
+gpiozero = "^1.6"
+luma.oled = "^2.7"
+Adafruit-SSD1306 = "^1.7"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2"
+pytest-cov = "^2.12"
+black = "^21.7b0"
+isort = "^5.9"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

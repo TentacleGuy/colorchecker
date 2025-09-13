@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Flask",
+            "type": "python",
+            "request": "launch",
+            "module": "src.ui_web.server",
+            "jinja": true,
+            "env": {
+                "FLASK_APP": "src/ui_web/server.py",
+                "FLASK_ENV": "development"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
