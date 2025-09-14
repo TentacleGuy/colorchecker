@@ -11,7 +11,10 @@ from typing import Optional, Dict, Any
 from fastapi import FastAPI, APIRouter, BackgroundTasks, Request
 from fastapi.responses import StreamingResponse, JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+try:
+    from fastapi.templating import Jinja2Templates  # type: ignore
+except Exception:  # pragma: no cover
+    Jinja2Templates = None  # type: ignore
 from pathlib import Path
 import logging
 from pydantic import BaseModel
@@ -35,7 +38,10 @@ if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 else:
     logging.getLogger("colorchecker").warning("Static-Verzeichnis fehlt: %s", STATIC_DIR)
-templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+if Jinja2Templates:
+    templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+else:
+    templates = None  # type: ignore
 router = APIRouter()
 
 
@@ -96,6 +102,8 @@ def capture_endpoint(background: BackgroundTasks):
 
 @router.get("/", response_class=HTMLResponse)
 def index(request: Request):
+    if not templates:
+        return HTMLResponse("<html><body><h1>ColorChecker</h1><p>Templates nicht verfügbar (jinja2 fehlt).</p></body></html>")
     return templates.TemplateResponse("index.html", {"request": request})
 
 
