@@ -103,7 +103,55 @@ def capture_endpoint(background: BackgroundTasks):
 @router.get("/", response_class=HTMLResponse)
 def index(request: Request):
     if not templates:
-        return HTMLResponse("<html><body><h1>ColorChecker</h1><p>Templates nicht verfügbar (jinja2 fehlt).</p></body></html>")
+                fallback_html = """
+                <html lang='de'>
+                <head>
+                        <meta charset='utf-8'>
+                        <title>ColorChecker (Fallback)</title>
+                        <style>
+                                body{font-family:Arial,sans-serif;margin:1rem;background:#f4f4f4;color:#222}
+                                h1{margin-top:0}
+                                .stream-wrapper{max-width:640px;position:relative;margin-bottom:.5rem}
+                                .stream-aspect{position:relative;width:100%;background:#000;border:1px solid #222;border-radius:4px;overflow:hidden;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+                                #video-stream{width:100%;height:100%;object-fit:cover;display:block}
+                                #stream-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);color:#fff;font-size:.95rem;display:flex;align-items:center;justify-content:center;text-align:center;padding:.5rem}
+                                #stream-overlay.hidden{display:none}
+                                .stream-actions{display:flex;gap:.5rem;margin-bottom:.5rem}
+                                button{background:#35424a;color:#fff;border:none;padding:.6rem 1rem;border-radius:4px;cursor:pointer;font-size:.85rem}
+                                button:hover{background:#47606a}
+                                .hint{font-size:.75rem;color:#555;max-width:640px}
+                        </style>
+                        <script>
+                        document.addEventListener('DOMContentLoaded',()=>{
+                                const img=document.getElementById('video-stream');
+                                const overlay=document.getElementById('stream-overlay');
+                                const reloadBtn=document.getElementById('reload-stream');
+                                function show(msg){overlay.textContent=msg;overlay.classList.remove('hidden');}
+                                function hide(){overlay.classList.add('hidden');}
+                                function reload(force){show('Lade Stream...');img.src='/stream'+(force?'?t='+Date.now():'');}
+                                if(reloadBtn){reloadBtn.addEventListener('click',()=>reload(true));}
+                                if(img){img.addEventListener('error',()=>{show('Fehler beim Stream. Neuer Versuch...');setTimeout(()=>reload(true),2000);});}
+                                show('Verbinde zum Kamera-Stream...');
+                        });
+                        </script>
+                </head>
+                <body>
+                        <h1>ColorChecker (Fallback)</h1>
+                        <p>Templates nicht verfügbar (jinja2 fehlt).</p>
+                        <div class='stream-wrapper'>
+                            <div class='stream-aspect'>
+                                <img id='video-stream' src='/stream' alt='Live Kamera Stream' />
+                                <div id='stream-overlay'>Initialisiere...</div>
+                            </div>
+                        </div>
+                        <div class='stream-actions'>
+                            <button id='reload-stream' type='button'>Reload Stream</button>
+                        </div>
+                        <p class='hint'>Diese vereinfachte Ansicht wird angezeigt, weil die Template Engine nicht installiert ist.</p>
+                </body>
+                </html>
+                """
+                return HTMLResponse(fallback_html)
     return templates.TemplateResponse("index.html", {"request": request})
 
 

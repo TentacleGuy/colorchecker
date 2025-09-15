@@ -59,3 +59,83 @@ h1 {
     font-weight: bold;
     color: #35424a;
 }
+
+/* Stream Bereich */
+.stream-wrapper {
+    max-width: 640px;
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.stream-aspect {
+    position: relative;
+    width: 100%;
+    background: #000;
+    border: 1px solid #222;
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#video-stream {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+#stream-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+#stream-overlay.hidden {
+    display: none;
+}
+
+.stream-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.stream-actions button {
+    background: #35424a;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.stream-actions button:hover {
+    background: #47606a;
+}
+
+.hint {
+    font-size: 0.75rem;
+    color: #555;
+    max-width: 640px;
+}
+
+@media (max-width: 760px) {
+    .stream-wrapper {
+        max-width: 100%;
+    }
+
+    .hint {
+        max-width: 100%;
+    }
+}
